@@ -8,7 +8,19 @@
       "Bash(npx create-next-app@latest . --typescript --eslint --tailwind --src-dir --app --turbopack --import-alias \"@/*\" --yes)",
       "Bash(mv /c/Users/spano/Documents/Dev/sebascm-dev.com/.atl /tmp/sebascm-atl-backup)",
       "Bash(npx create-next-app@latest /c/Users/spano/Documents/Dev/sebascm-dev.com --typescript --eslint --tailwind --src-dir --app --turbopack --import-alias \"@/*\" --yes)",
-      "Bash(mv /tmp/sebascm-atl-backup /c/Users/spano/Documents/Dev/sebascm-dev.com/.atl)"
+      "Bash(mv /tmp/sebascm-atl-backup /c/Users/spano/Documents/Dev/sebascm-dev.com/.atl)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(node -e \"const icons = require\\('react-icons/hi2'\\); console.log\\(Object.keys\\(icons\\).filter\\(k => k.includes\\('Arrow'\\)\\).slice\\(0, 20\\)\\)\")",
+      "Bash(node -e \"const si = require\\('react-icons/si'\\); console.log\\(['SiGithub','SiLinkedin','SiGitHub','SiLinkedIn'].map\\(k => k + ':' + \\(si[k] ? 'OK' : 'MISSING'\\)\\)\\)\")",
+      "Bash(node -e \"const si = require\\('react-icons/si'\\); console.log\\(Object.keys\\(si\\).filter\\(k => k.toLowerCase\\(\\).includes\\('linked'\\)\\)\\)\")",
+      "Bash(node -e \"const fa = require\\('react-icons/fa'\\); const found = Object.keys\\(fa\\).filter\\(k => k.toLowerCase\\(\\).includes\\('linked'\\)\\); console.log\\(found\\)\")",
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\('type:', p.type || 'commonjs'\\)\")",
+      "Bash(npx vitest:*)",
+      "Bash(printenv RESEND_API_KEY)",
+      "Bash(powershell -Command '[System.Environment]::SetEnvironmentVariable\\('\\\\''RESEND_API_KEY'\\\\'', $null, '\\\\''User'\\\\''\\); [System.Environment]::SetEnvironmentVariable\\('\\\\''RESEND_API_KEY'\\\\'', $null, '\\\\''Machine'\\\\''\\)')",
+      "Bash(powershell -Command '[System.Environment]::SetEnvironmentVariable\\('\\\\''RESEND_API_KEY'\\\\'', $null, '\\\\''User'\\\\''\\); Write-Host '\\\\''User var eliminada'\\\\''')",
+      "Bash(unset RESEND_API_KEY)"
     ],
     "additionalDirectories": [
       "C:\\Users\\spano\\Documents\\Dev\\sebascm-dev.com"
