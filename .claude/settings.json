@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/spano/.claude/skills/**)",
+      "mcp__plugin_engram_engram__mem_save",
+      "mcp__plugin_engram_engram__mem_search",
+      "mcp__plugin_engram_engram__mem_get_observation",
+      "Bash(npx create-next-app@latest . --typescript --eslint --tailwind --src-dir --app --turbopack --import-alias \"@/*\" --yes)",
+      "Bash(mv /c/Users/spano/Documents/Dev/sebascm-dev.com/.atl /tmp/sebascm-atl-backup)",
+      "Bash(npx create-next-app@latest /c/Users/spano/Documents/Dev/sebascm-dev.com --typescript --eslint --tailwind --src-dir --app --turbopack --import-alias \"@/*\" --yes)",
+      "Bash(mv /tmp/sebascm-atl-backup /c/Users/spano/Documents/Dev/sebascm-dev.com/.atl)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\spano\\Documents\\Dev\\sebascm-dev.com"
+    ]
+  }
+}
