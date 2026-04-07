@@ -1,75 +1,115 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { about } from '@/data/about'
+import ActivityGraph from '@/components/ui/ActivityGraph'
+import { IconArrowDown, IconMapPin } from '@tabler/icons-react'
 
-const container = {
+const container: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 },
+    transition: { staggerChildren: 0.12 },
   },
 }
 
-const item = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+const item: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0, 0, 0.58, 1] } },
 }
 
 export default function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center pt-16"
+      className="min-h-screen flex flex-col pointer-events-none relative overflow-hidden"
     >
-      <div className="max-w-5xl mx-auto px-6 py-24">
-        <motion.div variants={container} initial="hidden" animate="show">
-          <motion.p
-            variants={item}
-            className="font-mono text-sm text-[var(--accent)] mb-6 tracking-widest uppercase"
-          >
-            Hola, soy
-          </motion.p>
+      <ActivityGraph />
 
-          <motion.h1
-            variants={item}
-            className="text-5xl sm:text-7xl font-bold tracking-tight leading-none mb-4"
-          >
-            {about.name.split(' ')[0]}
-            <br />
-            <span className="text-[var(--foreground)]/30">{about.name.split(' ').slice(1).join(' ')}</span>
-          </motion.h1>
+      {/* Contenido: empuja hacia abajo para que los picos del gráfico respiren arriba */}
+      <div className="flex-1 flex items-center">
+        <div className="w-full max-w-5xl mx-auto px-6 py-16 pointer-events-auto relative z-10">
+          <motion.div variants={container} initial="hidden" animate="show">
 
-          <motion.p
-            variants={item}
-            className="text-xl sm:text-2xl text-[var(--accent)] font-medium mb-6"
-          >
-            {about.role}
-          </motion.p>
+            {/* Badge disponible */}
+            <motion.div variants={item} className="mb-8">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[11px] font-medium tracking-wide">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Disponible para trabajar
+              </span>
+            </motion.div>
 
-          <motion.p
-            variants={item}
-            className="text-base sm:text-lg text-[var(--foreground)]/60 max-w-xl leading-relaxed mb-12"
-          >
-            {about.tagline}
-          </motion.p>
-
-          <motion.div variants={item} className="flex flex-col sm:flex-row gap-4">
-            <a
-              href="#proyectos"
-              className="inline-flex items-center justify-center px-6 py-3 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm rounded-lg hover:opacity-90 transition-opacity"
+            {/* Nombre */}
+            <motion.p
+              variants={item}
+              className="font-mono text-xs text-[var(--accent)] mb-5 tracking-[0.25em] uppercase"
             >
-              Ver proyectos
-            </a>
-            <a
-              href="#contacto"
-              className="inline-flex items-center justify-center px-6 py-3 border border-[var(--border)] text-[var(--foreground)]/70 font-semibold text-sm rounded-lg hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
+              Hola, soy
+            </motion.p>
+
+            <motion.h1
+              variants={item}
+              className="text-6xl sm:text-8xl font-bold tracking-tight leading-[0.9] mb-5"
             >
-              Contactar
-            </a>
+              {about.name.split(' ')[0]}
+              <br />
+              <span className="text-[var(--foreground)]/25">{about.name.split(' ').slice(1).join(' ')}</span>
+            </motion.h1>
+
+            {/* Rol con línea decorativa */}
+            <motion.div variants={item} className="flex items-center gap-3 mb-5">
+              <div className="h-[1px] w-8 bg-[var(--accent)]/40" />
+              <p className="text-lg sm:text-xl text-[var(--accent)] font-medium">
+                {about.role}
+              </p>
+            </motion.div>
+
+            <motion.p
+              variants={item}
+              className="text-sm sm:text-base text-[var(--foreground)]/50 max-w-md leading-relaxed mb-10"
+            >
+              {about.tagline}
+            </motion.p>
+
+            {/* CTAs + localización */}
+            <motion.div variants={item} className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <a
+                href="#proyectos"
+                className="inline-flex items-center justify-center px-6 py-2.5 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Ver proyectos
+              </a>
+              <a
+                href="#contacto"
+                className="inline-flex items-center justify-center px-6 py-2.5 border border-[var(--border)] text-[var(--foreground)]/60 font-semibold text-sm rounded-lg hover:border-[var(--accent)]/50 hover:text-[var(--accent)] transition-colors"
+              >
+                Contactar
+              </a>
+              <span className="hidden sm:flex items-center gap-1.5 text-[var(--foreground)]/30 text-xs ml-2">
+                <IconMapPin size={12} />
+                Huelva, España
+              </span>
+            </motion.div>
+
           </motion.div>
-        </motion.div>
+        </div>
       </div>
+
+      {/* Indicador de scroll */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[var(--foreground)]/20 pointer-events-none z-10"
+      >
+        <span className="text-[10px] font-mono tracking-[0.2em] uppercase">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+        >
+          <IconArrowDown size={14} />
+        </motion.div>
+      </motion.div>
     </section>
   )
 }
