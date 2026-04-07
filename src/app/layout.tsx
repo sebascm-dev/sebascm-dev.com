@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { ViewTransition } from 'react'
 import './globals.css'
 import { about } from '@/data/about'
+import ScrollToTop from '@/components/ui/ScrollToTop'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -43,6 +44,7 @@ export default function RootLayout({
     <html lang="es" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`} data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
         <ViewTransition>{children}</ViewTransition>
+        <ScrollToTop />
       </body>
     </html>
   )
