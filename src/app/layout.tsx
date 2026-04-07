@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { ViewTransition } from 'react'
 import './globals.css'
-import Navbar from '@/components/layout/Navbar'
-import Footer from '@/components/layout/Footer'
 import { about } from '@/data/about'
 
 const geistSans = Geist({
@@ -41,11 +40,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html lang="es" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`} data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <ViewTransition>{children}</ViewTransition>
       </body>
     </html>
   )

@@ -21,10 +21,21 @@
       "Bash(powershell -Command '[System.Environment]::SetEnvironmentVariable\\('\\\\''RESEND_API_KEY'\\\\'', $null, '\\\\''User'\\\\''\\); [System.Environment]::SetEnvironmentVariable\\('\\\\''RESEND_API_KEY'\\\\'', $null, '\\\\''Machine'\\\\''\\)')",
       "Bash(powershell -Command '[System.Environment]::SetEnvironmentVariable\\('\\\\''RESEND_API_KEY'\\\\'', $null, '\\\\''User'\\\\''\\); Write-Host '\\\\''User var eliminada'\\\\''')",
       "Bash(unset RESEND_API_KEY)",
-      "mcp__plugin_engram_engram__mem_session_summary"
+      "mcp__plugin_engram_engram__mem_session_summary",
+      "mcp__plugin_engram_engram__mem_context",
+      "Bash(npm view:*)",
+      "Bash(cat /c/Users/spano/Documents/Dev/sebascm-dev.com/src/app/test/*.ts)",
+      "Bash(cat /c/Users/spano/Documents/Dev/sebascm-dev.com/vitest.config.*)",
+      "Bash(cat /c/Users/spano/Documents/Dev/sebascm-dev.com/src/components/sections/__tests__/*.test.*)",
+      "Bash(node -e \"const na = require\\('/c/Users/spano/Documents/Dev/sebascm-dev.com/node_modules/next-auth'\\); console.log\\(Object.keys\\(na\\)\\)\")",
+      "Bash(node -e \"const t = require\\('C:/Users/spano/Documents/Dev/sebascm-dev.com/node_modules/next/experimental/testing/server'\\); console.log\\(Object.keys\\(t\\)\\)\")",
+      "Bash(node -e ':*)",
+      "Bash(python3 \"C:\\\\Users\\\\spano\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"portfolio admin login personal dark elegant\" --design-system -p \"sebascm.dev\" -f markdown)",
+      "Bash(py \"C:\\\\Users\\\\spano\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"portfolio admin login personal dark elegant\" --design-system -p \"sebascm.dev\" -f markdown)"
     ],
     "additionalDirectories": [
-      "C:\\Users\\spano\\Documents\\Dev\\sebascm-dev.com"
+      "C:\\Users\\spano\\Documents\\Dev\\sebascm-dev.com",
+      "C:\\Users\\spano\\Documents\\Dev\\sebascm-dev.com\\src\\app\\api\\auth"
     ]
   }
 }
