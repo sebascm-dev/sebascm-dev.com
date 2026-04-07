@@ -1,15 +1,24 @@
+'use client'
+
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { about } from '@/data/about'
 
 export default function About() {
   return (
     <section id="sobre-mi" className="py-24 border-t border-[var(--border)]">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6 py-24">
         <p className="font-mono text-sm text-[var(--accent)] mb-12 tracking-widest uppercase">
           Sobre mí
         </p>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <motion.div 
+          className="grid md:grid-cols-2 gap-12 items-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <div>
             <h2 className="text-3xl sm:text-4xl font-bold mb-6 leading-tight">
               Estudiante de informática que construye cosas reales.
@@ -32,7 +41,7 @@ export default function About() {
               />
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
