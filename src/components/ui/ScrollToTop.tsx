@@ -35,11 +35,45 @@ export default function ScrollToTop() {
           initial={{ opacity: 0, scale: 0.5, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
+          whileHover="hover"
+          whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--accent)] shadow-lg transition-colors hover:bg-[var(--accent)] hover:text-[var(--background)] group focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 focus:ring-offset-[var(--background)]"
+          className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--accent)] shadow-lg transition-colors hover:bg-[var(--accent)] hover:text-[var(--background)] cursor-pointer flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 focus:ring-offset-[var(--background)] group"
           aria-label="Volver arriba"
         >
-          <IconArrowUp className="w-6 h-6 transition-transform group-hover:-translate-y-1" />
+          {/* Ping effect circle */}
+          <motion.div
+            variants={{
+              initial: { 
+                scale: 1, 
+                opacity: 0 
+              },
+              hover: {
+                scale: [1, 1.6],
+                opacity: [0.5, 0],
+                transition: {
+                  repeat: Infinity,
+                  duration: 1.2,
+                  ease: "easeOut"
+                }
+              }
+            }}
+            initial="initial"
+            animate="initial"
+            className="absolute inset-0 rounded-full border-2 border-[var(--accent)] pointer-events-none"
+          />
+          
+          <motion.div
+            variants={{
+              initial: { scale: 1 },
+              hover: { scale: 1.05 }
+            }}
+            initial="initial"
+            animate="initial"
+            className="relative z-10 flex items-center justify-center"
+          >
+            <IconArrowUp className="w-6 h-6" />
+          </motion.div>
         </motion.button>
       )}
     </AnimatePresence>
