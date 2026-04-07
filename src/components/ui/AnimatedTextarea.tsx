@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef } from 'react'
+import { forwardRef, useRef, useImperativeHandle } from 'react'
 import type { TextareaHTMLAttributes } from 'react'
 
 /**
@@ -11,11 +11,22 @@ import type { TextareaHTMLAttributes } from 'react'
  * text. An absolute overlay div renders the animated character spans on top.
  */
 const AnimatedTextarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(
-  function AnimatedTextarea(
+  (
     { className = '', value, style, placeholder, disabled, ...props },
     ref
-  ) {
+  ) => {
     const displayValue = String(value ?? '')
+    const textareaRef = useRef<HTMLTextAreaElement>(null)
+    const overlayRef = useRef<HTMLDivElement>(null)
+
+    // Sync external ref with internal ref
+    useImperativeHandle(ref, () => textareaRef.current!)
+
+    const handleScroll = () => {
+      if (overlayRef.current && textareaRef.current) {
+        overlayRef.current.scrollTop = textareaRef.current.scrollTop
+      }
+    }
 
     // Use contentClasses to sync topography/spacing between real and fake layers
     const contentClasses = (className.match(/\b(p[xylrtb]?-|text-|font-|tracking-|leading-|italic|antialiased)[\w.[/\]]+/g) ?? []).join(' ')
@@ -30,10 +41,11 @@ const AnimatedTextarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<
       >
         {/* Real textarea: transparent text, visible caret */}
         <textarea
-          ref={ref}
+          ref={textareaRef}
           value={value}
           disabled={disabled}
           placeholder=""
+          onScroll={handleScroll}
           className={`relative z-10 w-full bg-transparent caret-white border-0 rounded-[inherit] ${contentClasses} resize-none disabled:cursor-not-allowed`}
           style={{ 
             outline: 'none',
@@ -44,8 +56,8 @@ const AnimatedTextarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<
           {...props}
         />
 
-        {/* Animated character overlay — absolute, matches textarea dimensions */}
         <div
+          ref={overlayRef}
           className={`absolute inset-0 z-0 pointer-events-none overflow-hidden ${contentClasses} whitespace-pre-wrap break-words`}
           style={{ fontKerning: 'none', textRendering: 'optimizeSpeed' }}
           aria-hidden="true"
@@ -53,11 +65,30 @@ const AnimatedTextarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<
           {displayValue.length === 0 && placeholder ? (
             <span className="opacity-40 select-none">{placeholder}</span>
           ) : (
-            displayValue.split('').map((char, i) => (
-              <span key={i} className="inline-block animate-char-enter whitespace-pre">
-                {char === ' ' || char === '\n' ? (char === '\n' ? <br key={i} /> : '\u00A0') : char}
-              </span>
-            ))
+            displayValue.split(/(\s+)/).map((part, i) => {
+              if (part === '') return null
+              if (/\s/.test(part)) {
+                return part.split('').map((char, j) => {
+                  if (char === '\n') {
+                    return <br key={`${i}-${j}`} />
+                  }
+                  return (
+                    <span key={`${i}-${j}`} className="inline-block animate-char-enter whitespace-pre">
+                      {char === ' ' ? '\u00A0' : char}
+                    </span>
+                  )
+                })
+              }
+              return (
+                <span key={i} className="inline-block">
+                  {part.split('').map((char, j) => (
+                    <span key={`${i}-${j}`} className="inline-block animate-char-enter whitespace-pre">
+                      {char}
+                    </span>
+                  ))}
+                </span>
+              )
+            })
           )}
         </div>
       </div>
