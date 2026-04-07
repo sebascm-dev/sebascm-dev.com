@@ -27,7 +27,7 @@ export default function About() {
                 alt={`Foto de ${about.name}`}
                 width={320}
                 height={320}
-                className="relative rounded-2xl object-cover w-[320px] h-auto"
+                className="relative rounded-2xl object-cover w-[320px] h-[320px]"
                 priority
               />
             </div>
