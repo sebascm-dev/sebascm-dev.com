@@ -27,9 +27,8 @@ export default function About() {
                 alt={`Foto de ${about.name}`}
                 width={320}
                 height={320}
-                className="relative rounded-2xl object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                className="relative rounded-2xl object-cover w-[320px] h-auto"
                 priority
-                unoptimized
               />
             </div>
           </div>

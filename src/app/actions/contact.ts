@@ -23,8 +23,6 @@ export async function sendContactEmail(payload: ContactPayload): Promise<Contact
   if (!EMAIL_REGEX.test(email)) return { success: false, error: 'El formato del email no es válido.' }
   if (!message.trim()) return { success: false, error: 'El mensaje es obligatorio.' }
 
-  console.log('[Resend] key prefix:', process.env.RESEND_API_KEY?.slice(0, 12))
-
   const { data, error } = await resend.emails.send({
     from: 'Portfolio <onboarding@resend.dev>',
     to: process.env.CONTACT_EMAIL ?? 'spanolocabo@gmail.com',

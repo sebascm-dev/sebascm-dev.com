@@ -10,6 +10,6 @@ export const projects: Project[] = [
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Framer Motion'],
     demoUrl: 'https://celiamunozfisio.com',
     featured: true,
-    // image: '/projects/fisio-celia.png', // agregar cuando haya screenshot real
+    image: '/proyectos/imagen-celiamunozfisio.webp',
   },
 ]

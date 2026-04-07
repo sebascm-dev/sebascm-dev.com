@@ -20,7 +20,8 @@
       "Bash(printenv RESEND_API_KEY)",
       "Bash(powershell -Command '[System.Environment]::SetEnvironmentVariable\\('\\\\''RESEND_API_KEY'\\\\'', $null, '\\\\''User'\\\\''\\); [System.Environment]::SetEnvironmentVariable\\('\\\\''RESEND_API_KEY'\\\\'', $null, '\\\\''Machine'\\\\''\\)')",
       "Bash(powershell -Command '[System.Environment]::SetEnvironmentVariable\\('\\\\''RESEND_API_KEY'\\\\'', $null, '\\\\''User'\\\\''\\); Write-Host '\\\\''User var eliminada'\\\\''')",
-      "Bash(unset RESEND_API_KEY)"
+      "Bash(unset RESEND_API_KEY)",
+      "mcp__plugin_engram_engram__mem_session_summary"
     ],
     "additionalDirectories": [
       "C:\\Users\\spano\\Documents\\Dev\\sebascm-dev.com"
