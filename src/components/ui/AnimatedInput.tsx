@@ -8,24 +8,8 @@ const AnimatedInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInput
     { className = '', type, value, style, placeholder, disabled, ...props },
     ref
   ) {
-    const isPassword = type === 'password'
-
-    if (isPassword) {
-      return (
-        <input
-          ref={ref}
-          type="password"
-          value={value}
-          disabled={disabled}
-          placeholder={placeholder}
-          className={className}
-          style={{ outline: 'none', transition: 'border-color 200ms ease', ...style }}
-          {...props}
-        />
-      )
-    }
-
     const displayValue = String(value ?? '')
+    const isPassword = type === 'password'
 
     // These classes affect how text is laid out. We must apply them to BOTH the real element AND the overlay.
     const contentClasses = (className.match(/\b(p[xylrtb]?-|text-|font-|tracking-|leading-|italic|antialiased)[\w.[/\]]+/g) ?? []).join(' ')
@@ -55,7 +39,7 @@ const AnimatedInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInput
           ) : (
             displayValue.split('').map((char, i) => (
               <span key={i} className="inline-block animate-char-enter whitespace-pre">
-                {char === ' ' ? '\u00A0' : char}
+                {isPassword ? '•' : char === ' ' ? '\u00A0' : char}
               </span>
             ))
           )}
@@ -68,11 +52,12 @@ const AnimatedInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInput
           value={value}
           disabled={disabled}
           placeholder=""
-          className={`absolute inset-0 z-10 w-full h-full bg-transparent text-transparent caret-white rounded-[inherit] ${contentClasses} border-0 disabled:cursor-not-allowed`}
+          className={`absolute inset-0 z-10 w-full h-full bg-transparent caret-white rounded-[inherit] ${contentClasses} border-0 disabled:cursor-not-allowed`}
           style={{ 
             outline: 'none', 
             fontKerning: 'none', 
-            textRendering: 'optimizeSpeed'
+            textRendering: 'optimizeSpeed',
+            color: 'transparent'
           }}
           {...props}
         />

@@ -34,11 +34,12 @@ const AnimatedTextarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<
           value={value}
           disabled={disabled}
           placeholder=""
-          className={`relative z-10 w-full bg-transparent text-transparent caret-white border-0 rounded-[inherit] ${contentClasses} resize-none disabled:cursor-not-allowed`}
+          className={`relative z-10 w-full bg-transparent caret-white border-0 rounded-[inherit] ${contentClasses} resize-none disabled:cursor-not-allowed`}
           style={{ 
             outline: 'none',
             fontKerning: 'none',
-            textRendering: 'optimizeSpeed'
+            textRendering: 'optimizeSpeed',
+            color: 'transparent'
           }}
           {...props}
         />
