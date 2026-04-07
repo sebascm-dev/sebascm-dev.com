@@ -6,6 +6,8 @@ import { about } from '@/data/about'
 import { SiGithub } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
 import { HiDocumentArrowDown } from 'react-icons/hi2'
+import AnimatedInput from '@/components/ui/AnimatedInput'
+import AnimatedTextarea from '@/components/ui/AnimatedTextarea'
 
 interface FormState {
   name: string
@@ -107,12 +109,12 @@ export default function Contact() {
                   <label htmlFor="name" className="block text-xs font-mono text-[var(--foreground)]/50 uppercase tracking-wider mb-2">
                     Nombre
                   </label>
-                  <input
+                  <AnimatedInput
                     id="name"
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm focus:border-[var(--accent)] focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
                     placeholder="Tu nombre"
                   />
                 </div>
@@ -121,12 +123,12 @@ export default function Contact() {
                   <label htmlFor="email" className="block text-xs font-mono text-[var(--foreground)]/50 uppercase tracking-wider mb-2">
                     Email
                   </label>
-                  <input
+                  <AnimatedInput
                     id="email"
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm focus:border-[var(--accent)] focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
                     placeholder="tu@email.com"
                   />
                 </div>
@@ -135,12 +137,12 @@ export default function Contact() {
                   <label htmlFor="message" className="block text-xs font-mono text-[var(--foreground)]/50 uppercase tracking-wider mb-2">
                     Mensaje
                   </label>
-                  <textarea
+                  <AnimatedTextarea
                     id="message"
                     rows={5}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm focus:border-[var(--accent)] focus:outline-none transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
                     placeholder="Contame en qué puedo ayudarte..."
                   />
                 </div>
