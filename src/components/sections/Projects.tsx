@@ -10,7 +10,7 @@ const displayProjects = featuredProjects.length > 0 ? featuredProjects : project
 export default function Projects() {
   return (
     <section id="proyectos" className="py-24 border-t border-[var(--border)]">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6 py-24 w-full">
         <p className="font-mono text-sm text-[var(--accent)] mb-12 tracking-widest uppercase">
           Proyectos
         </p>

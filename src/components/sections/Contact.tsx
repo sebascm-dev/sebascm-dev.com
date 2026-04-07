@@ -8,6 +8,7 @@ import { FaLinkedin } from 'react-icons/fa'
 import { HiDocumentArrowDown } from 'react-icons/hi2'
 import AnimatedInput from '@/components/ui/AnimatedInput'
 import AnimatedTextarea from '@/components/ui/AnimatedTextarea'
+import Footer from '@/components/layout/Footer'
 
 interface FormState {
   name: string
@@ -51,7 +52,7 @@ export default function Contact() {
 
   return (
     <section id="contacto" className="py-24 border-t border-[var(--border)]">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6 w-full">
         <p className="font-mono text-sm text-[var(--accent)] mb-12 tracking-widest uppercase">
           Contacto
         </p>
