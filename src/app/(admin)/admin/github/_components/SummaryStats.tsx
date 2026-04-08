@@ -29,15 +29,15 @@ export function SummaryStats({ repos }: SummaryStatsProps) {
       {cards.map(({ label, value, icon: Icon }) => (
         <div
           key={label}
-          className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-4 flex flex-col gap-3"
+          className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-5 flex flex-col gap-3 hover:border-[#22d3ee]/30 transition-colors"
         >
+          <span className="text-xs text-gray-500 uppercase tracking-widest font-medium">
+            {label}
+          </span>
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">
-              {label}
-            </span>
-            <Icon size={16} className="text-[#22d3ee]" />
+            <p className="text-3xl font-bold font-mono text-white">{value}</p>
+            <Icon size={20} className="text-[#22d3ee] shrink-0" />
           </div>
-          <p className="text-2xl font-semibold text-white">{value}</p>
         </div>
       ))}
     </div>

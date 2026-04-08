@@ -3,15 +3,22 @@ import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { auth, signOut } from '@/lib/auth'
 import { about } from '@/data/about'
-import { IconLayoutDashboard, IconLogout, IconBrandGithub, IconGitBranch } from '@tabler/icons-react'
+import { IconLogout } from '@tabler/icons-react'
 import { AdminNav } from '@/components/admin/AdminNav'
-import type { NavItem } from '@/lib/github.types'
+import { Fira_Code, Fira_Sans } from 'next/font/google'
 
-const navItems: NavItem[] = [
-  { href: '/admin', label: 'Dashboard', icon: IconLayoutDashboard },
-  { href: '/admin/github', label: 'GitHub', icon: IconBrandGithub },
-  { href: '/admin/repos', label: 'Repositorios', icon: IconGitBranch },
-]
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  variable: '--font-fira-code',
+  display: 'swap',
+})
+
+const firaSans = Fira_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-fira-sans',
+  display: 'swap',
+})
 
 export default async function AdminLayout({
   children,
@@ -22,7 +29,7 @@ export default async function AdminLayout({
   if (!session) redirect('/login')
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex">
+    <div className={`min-h-screen bg-[#0a0a0a] text-white flex ${firaCode.variable} ${firaSans.variable} font-[var(--font-fira-sans)]`}>
 
       {/* Sidebar */}
       <aside className="w-56 shrink-0 flex flex-col border-r border-[#1a1a1a] bg-[#0d0d0d]">
@@ -42,7 +49,7 @@ export default async function AdminLayout({
           </div>
         </div>
 
-        <AdminNav navItems={navItems} />
+        <AdminNav />
 
         {/* Logout — pinned to bottom */}
         <div className="px-3 py-4 border-t border-[#1a1a1a]">

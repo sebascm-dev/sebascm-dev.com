@@ -43,7 +43,7 @@ export function DispatchButton({ repo, workflowId, defaultRef = 'main' }: Dispat
     return (
       <button
         disabled
-        className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs bg-[#1a1a1a] text-gray-400 cursor-not-allowed"
+        className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#F59E0B]/40 text-xs text-[#F59E0B] bg-[#1a1a2a] opacity-70 cursor-not-allowed transition-all duration-200"
       >
         <IconLoader2 size={12} className="animate-spin" />
         Ejecutando
@@ -53,7 +53,7 @@ export function DispatchButton({ repo, workflowId, defaultRef = 'main' }: Dispat
 
   if (state === 'success') {
     return (
-      <span className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs bg-green-950 text-green-400">
+      <span className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-green-400/40 text-xs text-green-400 transition-all duration-200">
         <IconCheck size={12} />
         Lanzado
       </span>
@@ -63,7 +63,7 @@ export function DispatchButton({ repo, workflowId, defaultRef = 'main' }: Dispat
   if (state === 'error') {
     return (
       <span
-        className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs bg-red-950 text-red-400"
+        className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-red-400/40 text-xs text-red-400 transition-all duration-200"
         title={errorMsg}
       >
         <IconX size={12} />
@@ -75,7 +75,7 @@ export function DispatchButton({ repo, workflowId, defaultRef = 'main' }: Dispat
   return (
     <button
       onClick={handleDispatch}
-      className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs bg-[#1a1a1a] text-gray-300 hover:bg-[#262626] hover:text-white transition-colors"
+      className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#F59E0B]/40 text-xs bg-[#1a1a2a] text-[#F59E0B] hover:bg-[#F59E0B]/10 transition-all duration-200 cursor-pointer"
     >
       <IconPlayerPlay size={12} />
       Deploy

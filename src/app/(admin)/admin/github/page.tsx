@@ -46,7 +46,7 @@ export default async function GithubPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-white">GitHub</h1>
+        <h1 className="text-2xl font-semibold text-white font-[var(--font-fira-code)]">GitHub</h1>
         <p className="text-sm text-gray-500 mt-1">Resumen de actividad y repositorios</p>
       </div>
 
@@ -54,7 +54,7 @@ export default async function GithubPage() {
         <SummaryStats repos={repos} />
       </Suspense>
 
-      <Suspense fallback={<SectionSkeleton height={240} />}>
+      <Suspense fallback={<SectionSkeleton height={260} />}>
         <ContributionsChart data={contributions} />
       </Suspense>
 

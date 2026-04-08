@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { IconChevronUp, IconChevronDown, IconLock } from '@tabler/icons-react'
+import { IconChevronUp, IconChevronDown, IconLock, IconGitBranch } from '@tabler/icons-react'
 import { DispatchButton } from './DispatchButton'
 import type { RepoWithStats } from '@/lib/github.types'
 
@@ -30,15 +30,17 @@ function SortHeader({ label, sortKey, current, onSort, align = 'right' }: SortHe
   const isActive = current.key === sortKey
   return (
     <th
-      className={`pb-2 font-medium cursor-pointer select-none hover:text-gray-300 transition-colors ${align === 'right' ? 'text-right' : 'text-left'}`}
+      className={`pb-2 font-medium cursor-pointer select-none transition-colors ${align === 'right' ? 'text-right' : 'text-left'} ${isActive ? 'text-[#22d3ee]' : 'text-gray-600 hover:text-gray-400'}`}
       onClick={() => onSort(sortKey)}
     >
       <span className="inline-flex items-center gap-1">
         {label}
         {isActive ? (
-          current.dir === 'asc' ? <IconChevronUp size={12} /> : <IconChevronDown size={12} />
+          current.dir === 'asc'
+            ? <IconChevronUp size={12} className="text-[#22d3ee]" />
+            : <IconChevronDown size={12} className="text-[#22d3ee]" />
         ) : (
-          <IconChevronDown size={12} className="opacity-30" />
+          <IconChevronDown size={12} className="text-gray-600" />
         )}
       </span>
     </th>
@@ -68,8 +70,9 @@ export function RepoTable({ repos }: RepoTableProps) {
 
   if (repos.length === 0) {
     return (
-      <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-12 text-center">
-        <p className="text-gray-500 text-sm">No repositories found</p>
+      <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-12 text-center flex flex-col items-center gap-3">
+        <IconGitBranch size={32} className="text-gray-700" />
+        <p className="text-gray-500 text-sm">No se encontraron repositorios</p>
       </div>
     )
   }
@@ -98,7 +101,7 @@ export function RepoTable({ repos }: RepoTableProps) {
                     href={repo.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-[#22d3ee] transition-colors font-medium"
+                    className="font-mono font-medium text-white hover:text-[#22d3ee] transition-colors cursor-pointer"
                   >
                     {repo.name}
                   </a>
@@ -108,7 +111,7 @@ export function RepoTable({ repos }: RepoTableProps) {
                 </td>
                 <td className="py-3 pr-4 text-right">
                   {repo.language ? (
-                    <span className="text-xs bg-[#1a1a1a] text-gray-300 px-2 py-0.5 rounded-full">
+                    <span className="text-xs bg-[#1a1a1a] border border-[#2a2a2a] text-gray-300 px-2 py-0.5 rounded-full">
                       {repo.language}
                     </span>
                   ) : (
@@ -123,7 +126,10 @@ export function RepoTable({ repos }: RepoTableProps) {
                 </td>
                 <td className="py-3 text-center">
                   {repo.isPrivate ? (
-                    <IconLock size={14} className="text-yellow-600 mx-auto" />
+                    <span className="inline-flex items-center gap-1 bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs px-2 py-0.5 rounded-full">
+                      <IconLock size={10} />
+                      Privado
+                    </span>
                   ) : null}
                 </td>
                 <td className="py-3 text-right">

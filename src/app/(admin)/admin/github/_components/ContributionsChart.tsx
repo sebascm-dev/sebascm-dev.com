@@ -49,13 +49,13 @@ export function ContributionsChart({ data }: ContributionsChartProps) {
   }
 
   return (
-    <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-6">
+    <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-4">
       <h3 className="text-sm font-medium text-gray-400 mb-4">Actividad de contribuciones</h3>
-      <ResponsiveContainer width="100%" height={180}>
+      <ResponsiveContainer width="100%" height={220}>
         <AreaChart data={data} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
           <defs>
             <linearGradient id="contributionsGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.15} />
+              <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.25} />
               <stop offset="100%" stopColor="#22d3ee" stopOpacity={0} />
             </linearGradient>
           </defs>
@@ -69,8 +69,8 @@ export function ContributionsChart({ data }: ContributionsChartProps) {
           <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 11 }} />
           <Tooltip
             contentStyle={{
-              background: '#0d0d0d',
-              border: '1px solid #1a1a1a',
+              background: '#1a1a1a',
+              border: '1px solid #22d3ee',
               borderRadius: '8px',
               color: '#fff',
               fontSize: 12,
