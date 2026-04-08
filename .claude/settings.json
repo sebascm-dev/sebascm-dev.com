@@ -33,7 +33,8 @@
       "Bash(python3 \"C:\\\\Users\\\\spano\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"portfolio admin login personal dark elegant\" --design-system -p \"sebascm.dev\" -f markdown)",
       "Bash(py \"C:\\\\Users\\\\spano\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"portfolio admin login personal dark elegant\" --design-system -p \"sebascm.dev\" -f markdown)",
       "Bash(python skills/ui-ux-pro-max/scripts/search.py \"dark portfolio developer tech background chart graph\" --domain chart -n 3)",
-      "Bash(python3 skills/ui-ux-pro-max/scripts/search.py \"dark portfolio developer tech background chart graph\" --domain chart -n 3)"
+      "Bash(python3 skills/ui-ux-pro-max/scripts/search.py \"dark portfolio developer tech background chart graph\" --domain chart -n 3)",
+      "Read(//c/Users/spano/.claude/**)"
     ],
     "additionalDirectories": [
       "C:\\Users\\spano\\Documents\\Dev\\sebascm-dev.com",

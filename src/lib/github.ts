@@ -20,6 +20,7 @@ export function processGithubEvents(history: { date: string, count: number }[], 
 
     rawPoints.push({
       activity: (sum / chunk.length) + 0.1,
+      commits: sum,
       repos: chunkRepos.map(r => r.name),
       repoDetails: chunkRepos,
       date: chunk[0].date

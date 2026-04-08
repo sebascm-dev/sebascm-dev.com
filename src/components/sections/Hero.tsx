@@ -24,6 +24,10 @@ export default function Hero() {
       id="hero"
       className="min-h-screen flex flex-col pointer-events-none relative overflow-hidden"
     >
+      {/* Fades permanentes — siempre visibles desde el inicio */}
+      <div className="absolute inset-x-0 top-0 h-24 pointer-events-none z-10" style={{ background: 'linear-gradient(to bottom, #0a0a0a, rgba(10,10,10,0))' }} />
+      <div className="absolute inset-x-0 bottom-0 h-[40%] pointer-events-none z-10" style={{ background: 'linear-gradient(to top, #0a0a0a, rgba(10,10,10,0))' }} />
+
       <ActivityGraph />
 
       {/* Contenido: empuja hacia abajo para que los picos del gráfico respiren arriba */}
