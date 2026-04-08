@@ -6,6 +6,7 @@ import { SummaryStats } from './_components/SummaryStats'
 import { ContributionsChart } from './_components/ContributionsChart'
 import { TopReposCard } from './_components/TopReposCard'
 import { LanguageBreakdown } from './_components/LanguageBreakdown'
+import { RepoTable } from '../repos/_components/RepoTable'
 import type { ContributionDay } from '@/lib/github.types'
 
 export const revalidate = 300
@@ -65,6 +66,14 @@ export default async function GithubPage() {
         <Suspense fallback={<SectionSkeleton height={280} />}>
           <LanguageBreakdown data={languages} />
         </Suspense>
+      </div>
+
+      <div className="space-y-3">
+        <div>
+          <h2 className="text-base font-semibold text-white font-[var(--font-fira-code)]">Repositorios</h2>
+          <p className="text-xs text-gray-500 mt-0.5">{repos.length} repositorios · ordenados por commits</p>
+        </div>
+        <RepoTable repos={repos} />
       </div>
     </div>
   )

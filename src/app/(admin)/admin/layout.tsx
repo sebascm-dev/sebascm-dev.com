@@ -32,7 +32,7 @@ export default async function AdminLayout({
     <div className={`min-h-screen bg-[#0a0a0a] text-white flex ${firaCode.variable} ${firaSans.variable} font-[var(--font-fira-sans)]`}>
 
       {/* Sidebar */}
-      <aside className="w-56 shrink-0 flex flex-col border-r border-[#1a1a1a] bg-[#0d0d0d]">
+      <aside className="w-56 shrink-0 flex flex-col border-r border-[#1a1a1a] bg-[#0d0d0d] sticky top-0 h-screen">
 
         {/* User profile */}
         <div className="px-4 py-4 border-b border-[#1a1a1a] flex items-center gap-3">
@@ -72,7 +72,7 @@ export default async function AdminLayout({
 
       {/* Main content */}
       <main className="flex-1 p-8 overflow-auto">
-        <div className="max-w-5xl">
+        <div className="w-full">
           {children}
         </div>
       </main>
