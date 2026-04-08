@@ -1,15 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { IconChevronUp, IconChevronDown, IconLock, IconGitBranch } from '@tabler/icons-react'
-import { DispatchButton } from './DispatchButton'
+import { IconChevronUp, IconChevronDown, IconLock, IconGitBranch, IconAlertCircle, IconCircleCheck } from '@tabler/icons-react'
 import type { RepoWithStats } from '@/lib/github.types'
 
 interface RepoTableProps {
   repos: RepoWithStats[]
 }
 
-type SortKey = 'name' | 'stargazerCount' | 'forkCount' | 'totalCommits'
+type SortKey = 'name' | 'stargazerCount' | 'forkCount' | 'totalCommits' | 'openIssues'
 type SortDir = 'asc' | 'desc'
 
 const DEFAULT_SORT: { key: SortKey; dir: SortDir } = { key: 'totalCommits', dir: 'desc' }
@@ -30,7 +29,7 @@ function SortHeader({ label, sortKey, current, onSort, align = 'right' }: SortHe
   const isActive = current.key === sortKey
   return (
     <th
-      className={`pb-2 font-medium cursor-pointer select-none transition-colors ${align === 'right' ? 'text-right' : 'text-left'} ${isActive ? 'text-[#22d3ee]' : 'text-gray-600 hover:text-gray-400'}`}
+      className={`px-4 py-3 font-medium cursor-pointer select-none transition-colors ${align === 'right' ? 'text-right' : 'text-left'} ${isActive ? 'text-[#22d3ee]' : 'text-gray-600 hover:text-gray-400'}`}
       onClick={() => onSort(sortKey)}
     >
       <span className="inline-flex items-center gap-1">
@@ -80,23 +79,33 @@ export function RepoTable({ repos }: RepoTableProps) {
   return (
     <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm table-fixed">
+          <colgroup>
+            <col className="w-full" />
+            <col className="w-32" />
+            <col className="w-20" />
+            <col className="w-20" />
+            <col className="w-24" />
+            <col className="w-32" />
+            <col className="w-24" />
+            <col className="w-36" />
+          </colgroup>
           <thead>
             <tr className="text-left text-xs text-gray-500 border-b border-[#1a1a1a]">
               <SortHeader label="Nombre" sortKey="name" current={sort} onSort={handleSort} align="left" />
-              <th className="pb-2 font-medium text-right pr-4">Lenguaje</th>
+              <th className="px-4 py-3 font-medium text-right">Lenguaje</th>
               <SortHeader label="Stars" sortKey="stargazerCount" current={sort} onSort={handleSort} />
               <SortHeader label="Forks" sortKey="forkCount" current={sort} onSort={handleSort} />
               <SortHeader label="Commits" sortKey="totalCommits" current={sort} onSort={handleSort} />
-              <th className="pb-2 font-medium text-right">Actualizado</th>
-              <th className="pb-2 font-medium text-center">Privado</th>
-              <th className="pb-2 font-medium text-right">Acciones</th>
+              <th className="px-4 py-3 font-medium text-right">Actualizado</th>
+              <th className="px-4 py-3 font-medium text-center">Privado</th>
+              <SortHeader label="Issues" sortKey="openIssues" current={sort} onSort={handleSort} />
             </tr>
           </thead>
           <tbody>
             {sorted.map((repo) => (
               <tr key={repo.name} className="border-b border-[#1a1a1a] last:border-0 hover:bg-[#111] transition-colors">
-                <td className="py-3 pr-4">
+                <td className="px-4 py-3">
                   <a
                     href={repo.url}
                     target="_blank"
@@ -109,7 +118,7 @@ export function RepoTable({ repos }: RepoTableProps) {
                     <p className="text-xs text-gray-500 mt-0.5 max-w-xs truncate">{repo.description}</p>
                   )}
                 </td>
-                <td className="py-3 pr-4 text-right">
+                <td className="px-4 py-3 text-right">
                   {repo.language ? (
                     <span className="text-xs bg-[#1a1a1a] border border-[#2a2a2a] text-gray-300 px-2 py-0.5 rounded-full">
                       {repo.language}
@@ -118,13 +127,13 @@ export function RepoTable({ repos }: RepoTableProps) {
                     <span className="text-gray-600">—</span>
                   )}
                 </td>
-                <td className="py-3 text-right text-gray-400">{repo.stargazerCount}</td>
-                <td className="py-3 text-right text-gray-400">{repo.forkCount}</td>
-                <td className="py-3 text-right text-gray-400">{repo.totalCommits.toLocaleString()}</td>
-                <td className="py-3 text-right text-gray-500 text-xs whitespace-nowrap">
+                <td className="px-4 py-3 text-right text-gray-400">{repo.stargazerCount}</td>
+                <td className="px-4 py-3 text-right text-gray-400">{repo.forkCount}</td>
+                <td className="px-4 py-3 text-right text-gray-400">{repo.totalCommits.toLocaleString()}</td>
+                <td className="px-4 py-3 text-right text-gray-500 text-xs whitespace-nowrap">
                   {formatDate(repo.updatedAt)}
                 </td>
-                <td className="py-3 text-center">
+                <td className="px-4 py-3 text-center">
                   {repo.isPrivate ? (
                     <span className="inline-flex items-center gap-1 bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs px-2 py-0.5 rounded-full">
                       <IconLock size={10} />
@@ -132,12 +141,29 @@ export function RepoTable({ repos }: RepoTableProps) {
                     </span>
                   ) : null}
                 </td>
-                <td className="py-3 text-right">
-                  <DispatchButton
-                    repo={repo.fullName}
-                    workflowId="deploy.yml"
-                    defaultRef={repo.defaultBranch}
-                  />
+                <td className="px-4 py-3 text-right">
+                  <a
+                    href={`${repo.url}/issues`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full transition-colors ${
+                      repo.openIssues > 0
+                        ? 'bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20'
+                        : 'bg-green-500/10 border border-green-500/20 text-green-400 hover:bg-green-500/20'
+                    }`}
+                  >
+                    {repo.openIssues > 0 ? (
+                      <>
+                        <IconAlertCircle size={12} />
+                        {repo.openIssues} abiertos
+                      </>
+                    ) : (
+                      <>
+                        <IconCircleCheck size={12} />
+                        Sin issues
+                      </>
+                    )}
+                  </a>
                 </td>
               </tr>
             ))}
