@@ -6,8 +6,12 @@ import { SummaryStats } from './_components/SummaryStats'
 import { ContributionsChart } from './_components/ContributionsChart'
 import { TopReposCard } from './_components/TopReposCard'
 import { LanguageBreakdown } from './_components/LanguageBreakdown'
+import { ActivityMetrics } from './_components/ActivityMetrics'
+import { WeekdayChart } from './_components/WeekdayChart'
 import { RepoTable } from '../repos/_components/RepoTable'
 import type { ContributionDay } from '@/lib/github.types'
+
+const DAYS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
 
 export const revalidate = 300
 
@@ -44,6 +48,13 @@ export default async function GithubPage() {
     fetchContributions(),
   ])
 
+  const weekdayTotals = Array(7).fill(0) as number[]
+  for (const d of contributions) {
+    const dow = new Date(d.date + 'T12:00:00').getDay()
+    weekdayTotals[dow] += d.count
+  }
+  const weekdayData = DAYS.map((day, i) => ({ day, commits: weekdayTotals[i] }))
+
   return (
     <div className="space-y-6">
       <div>
@@ -55,14 +66,17 @@ export default async function GithubPage() {
         <SummaryStats repos={repos} />
       </Suspense>
 
+      <ActivityMetrics contributions={contributions} />
+
       <Suspense fallback={<SectionSkeleton height={260} />}>
         <ContributionsChart data={contributions} />
       </Suspense>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Suspense fallback={<SectionSkeleton height={280} />}>
           <TopReposCard repos={repos} />
         </Suspense>
+        <WeekdayChart data={weekdayData} />
         <Suspense fallback={<SectionSkeleton height={280} />}>
           <LanguageBreakdown data={languages} />
         </Suspense>
