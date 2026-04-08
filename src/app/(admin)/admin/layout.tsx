@@ -3,7 +3,15 @@ import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { auth, signOut } from '@/lib/auth'
 import { about } from '@/data/about'
-import { IconLayoutDashboard, IconLogout } from '@tabler/icons-react'
+import { IconLayoutDashboard, IconLogout, IconBrandGithub, IconGitBranch } from '@tabler/icons-react'
+import { AdminNav } from '@/components/admin/AdminNav'
+import type { NavItem } from '@/lib/github.types'
+
+const navItems: NavItem[] = [
+  { href: '/admin', label: 'Dashboard', icon: IconLayoutDashboard },
+  { href: '/admin/github', label: 'GitHub', icon: IconBrandGithub },
+  { href: '/admin/repos', label: 'Repositorios', icon: IconGitBranch },
+]
 
 export default async function AdminLayout({
   children,
@@ -34,16 +42,7 @@ export default async function AdminLayout({
           </div>
         </div>
 
-        {/* Nav items — empty for now, ready for future tabs */}
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          <a
-            href="/admin"
-            className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-white bg-[#1a1a1a]"
-          >
-            <IconLayoutDashboard size={16} className="text-[#22d3ee]" />
-            Dashboard
-          </a>
-        </nav>
+        <AdminNav navItems={navItems} />
 
         {/* Logout — pinned to bottom */}
         <div className="px-3 py-4 border-t border-[#1a1a1a]">

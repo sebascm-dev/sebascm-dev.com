@@ -1,40 +1,38 @@
 import { describe, it, expect } from 'vitest';
-import { processGithubEvents, calculateSmoothPath } from '../github';
+import { processGithubEvents } from '../github';
 
 describe('processGithubEvents', () => {
-  it('should group events by 15-day intervals and calculate averages', () => {
-    const now = new Date('2024-02-01T10:00:00Z');
-    const mockEvents = [
-      { created_at: '2024-01-20T10:00:00Z', type: 'PushEvent', payload: { commits: [1, 2] } }, // Bloque 1
-      { created_at: '2024-01-25T10:00:00Z', type: 'PushEvent', payload: { commits: [1] } },    // Bloque 1
-      { created_at: '2024-01-05T10:00:00Z', type: 'PushEvent', payload: { commits: [1, 2, 3] } }, // Bloque 2
+  it('should process history and repos into activity points', () => {
+    const history = [
+      { date: '2024-01-01', count: 5 },
+      { date: '2024-01-02', count: 3 },
+      { date: '2024-01-03', count: 2 },
+    ];
+    const repos = [
+      { name: 'repo1', createdAt: '2024-01-01T00:00:00Z', totalCommits: 10 },
     ];
 
-    const result = processGithubEvents(mockEvents as any, 30, 15, now);
-    
-    expect(result).toHaveLength(2);
-    // Bloque 1 (reciente: 17 ene - 1 feb): 3 commits total / 15 días = 0.2 media
-    expect(result[1].average).toBeCloseTo(0.2);
-    // Bloque 2 (antiguo: 2 ene - 17 ene): 3 commits total / 15 días = 0.2 media
-    expect(result[0].average).toBeCloseTo(0.2);
+    const result = processGithubEvents(history, repos);
+
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
+    result.forEach(point => {
+      expect(typeof point.activity).toBe('number');
+      expect(typeof point.commits).toBe('number');
+      expect(typeof point.date).toBe('string');
+      expect(Array.isArray(point.repos)).toBe(true);
+    });
   });
 
-  it('should return 0 average for empty intervals', () => {
-    const result = processGithubEvents([], 30);
-    expect(result).toHaveLength(2);
-    expect(result[0].average).toBe(0);
+  it('should return empty array for empty history', () => {
+    const result = processGithubEvents([], []);
+    expect(result).toHaveLength(0);
   });
-});
 
-describe('calculateSmoothPath', () => {
-  it('should generate a valid SVG path string', () => {
-    const mockData = [
-      { average: 0.1 },
-      { average: 0.5 },
-      { average: 0.2 },
-    ];
-    const path = calculateSmoothPath(mockData, 100, 100);
-    expect(path).toContain('M');
-    expect(path).toContain('C'); // Curvas de Bezier
+  it('should handle repos with no totalCommits', () => {
+    const history = [{ date: '2024-01-01', count: 1 }];
+    const repos = [{ name: 'repo1', createdAt: '2024-01-01T00:00:00Z' }];
+    const result = processGithubEvents(history, repos);
+    expect(Array.isArray(result)).toBe(true);
   });
 });
