@@ -6,8 +6,8 @@ import { about } from '@/data/about'
 
 export default function About() {
   return (
-    <section id="sobre-mi" className="py-24 border-t border-[var(--border)]">
-      <div className="max-w-5xl mx-auto px-6 py-24">
+    <section id="sobre-mi" className="py-24 border-t border-[var(--border)] pointer-events-none relative z-10">
+      <div className="max-w-5xl mx-auto px-6 py-24 pointer-events-auto">
         <p className="font-mono text-sm text-[var(--accent)] mb-12 tracking-widest uppercase">
           Sobre mí
         </p>
