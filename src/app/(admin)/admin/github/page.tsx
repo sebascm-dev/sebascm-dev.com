@@ -53,7 +53,12 @@ export default async function GithubPage() {
     const dow = new Date(d.date + 'T12:00:00').getDay()
     weekdayTotals[dow] += d.count
   }
-  const weekdayData = DAYS.map((day, i) => ({ day, commits: weekdayTotals[i] }))
+  // Reordenar para que el último día sea hoy
+  const todayDow = new Date().getDay()
+  const weekdayData = Array.from({ length: 7 }, (_, i) => {
+    const idx = (todayDow - 6 + i + 7) % 7
+    return { day: DAYS[idx], commits: weekdayTotals[idx] }
+  })
 
   return (
     <div className="space-y-6">
@@ -72,14 +77,10 @@ export default async function GithubPage() {
         <ContributionsChart data={contributions} />
       </Suspense>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Suspense fallback={<SectionSkeleton height={280} />}>
-          <TopReposCard repos={repos} />
-        </Suspense>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch lg:h-56">
+        <TopReposCard repos={repos} />
         <WeekdayChart data={weekdayData} />
-        <Suspense fallback={<SectionSkeleton height={280} />}>
-          <LanguageBreakdown data={languages} />
-        </Suspense>
+        <LanguageBreakdown data={languages} />
       </div>
 
       <div className="space-y-3">

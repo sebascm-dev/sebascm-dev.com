@@ -44,11 +44,11 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
 
 export function WeekdayChart({ data }: WeekdayChartProps) {
   return (
-    <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-5">
+    <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-5 flex flex-col justify-end h-full">
       <p className="text-xs text-gray-500 uppercase tracking-widest font-medium mb-4">
         Commits por día
       </p>
-      <ResponsiveContainer width="100%" height={160}>
+      <ResponsiveContainer width="100%" height="100%" className="flex-1">
         <BarChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
           <XAxis
             dataKey="day"

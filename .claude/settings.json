@@ -44,7 +44,11 @@
       "Bash(py \"C:/Users/spano/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"admin dashboard dark analytics portfolio developer\" --design-system -p \"sebascm.dev admin\" -f markdown)",
       "Bash(py \"C:/Users/spano/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"chart dashboard analytics\" --domain chart)",
       "Bash(py \"C:/Users/spano/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"animation loading dark\" --domain ux)",
-      "Read(//mnt/skills/user/ui-ux-pro-max/**)"
+      "Read(//mnt/skills/user/ui-ux-pro-max/**)",
+      "Bash(node -e \"require\\('recharts'\\); console.log\\('ok'\\)\")",
+      "Bash(python3 \"C:/Users/spano/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"admin dashboard data visualization dark OLED chart donut\" --design-system -p \"sebascm-dev GitHub Panel\")",
+      "Bash(py \"C:/Users/spano/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"admin dashboard data visualization dark OLED donut chart\" --design-system -p \"sebascm-dev GitHub Panel\")",
+      "Bash(py \"C:/Users/spano/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"donut pie chart legend data visualization\" --domain chart -n 5)"
     ],
     "additionalDirectories": [
       "C:\\Users\\spano\\Documents\\Dev\\sebascm-dev.com",

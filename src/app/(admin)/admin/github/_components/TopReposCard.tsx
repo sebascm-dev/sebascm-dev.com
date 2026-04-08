@@ -8,55 +8,47 @@ interface TopReposCardProps {
 export function TopReposCard({ repos }: TopReposCardProps) {
   const topRepos = [...repos]
     .sort((a, b) => b.totalCommits - a.totalCommits)
-    .slice(0, 5)
+    .slice(0, 3)
 
   return (
-    <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl overflow-hidden">
+    <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl overflow-hidden h-full flex flex-col">
       <div className="px-4 py-3 border-b border-[#1a1a1a]">
-        <h3 className="text-sm font-medium text-gray-400">Top repos por commits</h3>
+        <h3 className="text-xs text-gray-500 uppercase tracking-widest font-medium">Top 3 repos por commits</h3>
       </div>
       {topRepos.length === 0 ? (
         <p className="text-gray-500 text-sm px-4 py-6">No hay repositorios</p>
       ) : (
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-left text-xs text-gray-500 border-b border-[#1a1a1a]">
-              <th className="px-4 pb-2 pt-3 font-medium">Nombre</th>
-              <th className="pb-2 pt-3 font-medium text-right">Stars</th>
-              <th className="pb-2 pt-3 font-medium text-right">Commits</th>
-              <th className="px-4 pb-2 pt-3 font-medium text-right">Lenguaje</th>
-            </tr>
-          </thead>
-          <tbody>
+        <>
+          <div className="grid grid-cols-[1fr_auto_auto_90px] text-left text-xs text-gray-500 border-b border-[#1a1a1a] px-4 py-2">
+            <span className="font-medium">Nombre</span>
+            <span className="font-medium text-right pr-4">Stars</span>
+            <span className="font-medium text-right pr-4">Commits</span>
+            <span className="font-medium text-right">Lenguaje</span>
+          </div>
+          <div className="flex flex-col flex-1 divide-y divide-[#1a1a1a]">
             {topRepos.map((repo) => (
-              <tr
+              <div
                 key={repo.name}
-                className="border-b border-[#1a1a1a] last:border-0 hover:bg-[#1a1a1a] transition-colors cursor-pointer"
+                className="grid grid-cols-[1fr_auto_auto_90px] items-center flex-1 px-4 hover:bg-[#1a1a1a] transition-colors"
               >
-                <td className="px-4 py-3">
-                  <a
-                    href={repo.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 font-mono text-sm font-medium text-white hover:text-[#22d3ee] transition-colors"
-                  >
-                    {repo.name}
-                    <IconExternalLink size={12} className="text-gray-600 shrink-0" />
-                  </a>
-                </td>
-                <td className="py-3 text-right text-gray-400">
-                  <span className="inline-flex items-center justify-end gap-1">
-                    <IconStar size={12} className="text-gray-500" />
-                    {repo.stargazerCount}
-                  </span>
-                </td>
-                <td className="py-3 text-right text-gray-400">
-                  <span className="inline-flex items-center justify-end gap-1">
-                    <IconGitCommit size={12} className="text-gray-500" />
-                    {repo.totalCommits.toLocaleString()}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-right">
+                <a
+                  href={repo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 font-mono text-sm font-medium text-white hover:text-[#22d3ee] transition-colors py-3"
+                >
+                  {repo.name}
+                  <IconExternalLink size={12} className="text-gray-600 shrink-0" />
+                </a>
+                <span className="inline-flex items-center justify-end gap-1 text-gray-400 text-sm pr-4">
+                  <IconStar size={12} className="text-gray-500" />
+                  {repo.stargazerCount}
+                </span>
+                <span className="inline-flex items-center justify-end gap-1 text-gray-400 text-sm pr-4">
+                  <IconGitCommit size={12} className="text-gray-500" />
+                  {repo.totalCommits.toLocaleString()}
+                </span>
+                <div className="text-right">
                   {repo.language ? (
                     <span className="text-xs bg-[#1a1a1a] border border-[#2a2a2a] text-gray-300 px-2 py-0.5 rounded-full">
                       {repo.language}
@@ -64,11 +56,11 @@ export function TopReposCard({ repos }: TopReposCardProps) {
                   ) : (
                     <span className="text-gray-600 text-xs">—</span>
                   )}
-                </td>
-              </tr>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </>
       )}
     </div>
   )
