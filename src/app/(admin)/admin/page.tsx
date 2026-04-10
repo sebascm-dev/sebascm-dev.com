@@ -6,9 +6,6 @@ export default async function AdminPage() {
 
   return (
     <div>
-      <p className="font-mono text-sm text-gray-400 mb-6">
-        sebascm.dev / <span className="text-[#22d3ee]">dashboard</span>
-      </p>
       <h1 className="text-2xl font-semibold mb-2">
         Hola, {session?.user?.name ?? 'Admin'} 👋
       </h1>

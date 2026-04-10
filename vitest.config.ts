@@ -9,7 +9,11 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     globals: true,
     pool: 'forks',
-    singleFork: true,
+    poolOptions: {
+      forks: {
+        singleFork: true,
+      },
+    },
   },
   resolve: {
     alias: {

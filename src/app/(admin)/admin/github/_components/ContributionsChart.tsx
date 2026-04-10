@@ -76,7 +76,7 @@ export function ContributionsChart({ data }: ContributionsChartProps) {
               fontSize: 12,
             }}
             labelStyle={{ color: '#9ca3af' }}
-            formatter={(value: number) => [value, 'Contribuciones']}
+            formatter={(value) => [value ?? 0, 'Contribuciones']}
           />
           <Area
             type="monotone"

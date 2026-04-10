@@ -62,7 +62,7 @@ export function LanguageBreakdown({ data }: LanguageBreakdownProps) {
                 color: '#fff',
                 fontSize: 11,
               }}
-              formatter={(value: number, name: string) => [`${((value / totalBytes) * 100).toFixed(1)}%`, name]}
+              formatter={(value, name) => [`${(((value as number) / totalBytes) * 100).toFixed(1)}%`, name as string]}
             />
             {topLanguage && (
               <text x={55} y={51} textAnchor="middle" dominantBaseline="middle" fill="#e5e7eb" fontSize={9} fontFamily="monospace" fontWeight={700}>

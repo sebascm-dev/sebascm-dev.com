@@ -2,11 +2,12 @@
 
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { IconLayoutDashboard, IconBrandGithub } from '@tabler/icons-react'
+import { IconLayoutDashboard, IconBrandGithub, IconUser } from '@tabler/icons-react'
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: IconLayoutDashboard },
   { href: '/admin/github', label: 'GitHub', icon: IconBrandGithub },
+  { href: '/admin/profile', label: 'Perfil', icon: IconUser },
 ]
 
 export function AdminNav() {

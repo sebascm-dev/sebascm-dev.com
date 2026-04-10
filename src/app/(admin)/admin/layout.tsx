@@ -5,6 +5,7 @@ import { auth, signOut } from '@/lib/auth'
 import { about } from '@/data/about'
 import { IconLogout } from '@tabler/icons-react'
 import { AdminNav } from '@/components/admin/AdminNav'
+import { Breadcrumb } from '@/components/admin/Breadcrumb'
 import { Fira_Code, Fira_Sans } from 'next/font/google'
 
 const firaCode = Fira_Code({
@@ -73,6 +74,7 @@ export default async function AdminLayout({
       {/* Main content */}
       <main className="flex-1 p-8 overflow-auto">
         <div className="w-full">
+          <Breadcrumb />
           {children}
         </div>
       </main>
