@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from '@/lib/toast'
 import { sendContactEmail } from '@/app/actions/contact'
 import { about } from '@/data/about'
 import { SiGithub } from 'react-icons/si'
@@ -18,9 +19,7 @@ interface FormState {
 
 export default function Contact() {
   const [form, setForm] = useState<FormState>({ name: '', email: '', message: '' })
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [errorMsg, setErrorMsg] = useState<string>('')
-  const [fieldError, setFieldError] = useState<string>('')
+  const [loading, setLoading] = useState(false)
 
   const validate = (): string => {
     if (!form.name.trim()) return 'El nombre es obligatorio.'
@@ -33,20 +32,19 @@ export default function Contact() {
     e.preventDefault()
     const validationError = validate()
     if (validationError) {
-      setFieldError(validationError)
+      toast.warning(validationError)
       return
     }
-    setFieldError('')
-    setStatus('loading')
+    setLoading(true)
 
     const result = await sendContactEmail(form)
+    setLoading(false)
 
     if (result.success) {
-      setStatus('success')
+      toast.success('¡Mensaje enviado! Te respondo a la brevedad.')
       setForm({ name: '', email: '', message: '' })
     } else {
-      setStatus('error')
-      setErrorMsg(result.error ?? 'Error desconocido.')
+      toast.error(result.error ?? 'No se pudo enviar el mensaje.')
     }
   }
 
@@ -96,74 +94,57 @@ export default function Contact() {
 
           {/* Form */}
           <div>
-            {status === 'success' ? (
-              <div className="flex flex-col items-center justify-center h-full text-center py-12">
-                <div className="text-4xl mb-4">✓</div>
-                <p className="text-lg font-semibold text-[var(--accent)]">¡Mensaje enviado!</p>
-                <p className="text-sm text-[var(--foreground)]/60 mt-2">
-                  Te respondo a la brevedad.
-                </p>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
+              <div>
+                <label htmlFor="name" className="block text-xs font-mono text-[var(--foreground)]/50 uppercase tracking-wider mb-2">
+                  Nombre
+                </label>
+                <AnimatedInput
+                  id="name"
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
+                  placeholder="Tu nombre"
+                />
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
-                <div>
-                  <label htmlFor="name" className="block text-xs font-mono text-[var(--foreground)]/50 uppercase tracking-wider mb-2">
-                    Nombre
-                  </label>
-                  <AnimatedInput
-                    id="name"
-                    type="text"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
-                    placeholder="Tu nombre"
-                  />
-                </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-xs font-mono text-[var(--foreground)]/50 uppercase tracking-wider mb-2">
-                    Email
-                  </label>
-                  <AnimatedInput
-                    id="email"
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
-                    placeholder="tu@email.com"
-                  />
-                </div>
+              <div>
+                <label htmlFor="email" className="block text-xs font-mono text-[var(--foreground)]/50 uppercase tracking-wider mb-2">
+                  Email
+                </label>
+                <AnimatedInput
+                  id="email"
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
+                  placeholder="tu@email.com"
+                />
+              </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-xs font-mono text-[var(--foreground)]/50 uppercase tracking-wider mb-2">
-                    Mensaje
-                  </label>
-                  <AnimatedTextarea
-                    id="message"
-                    rows={5}
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
-                    placeholder="Contame en qué puedo ayudarte..."
-                  />
-                </div>
+              <div>
+                <label htmlFor="message" className="block text-xs font-mono text-[var(--foreground)]/50 uppercase tracking-wider mb-2">
+                  Mensaje
+                </label>
+                <AnimatedTextarea
+                  id="message"
+                  rows={5}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
+                  placeholder="Contame en qué puedo ayudarte..."
+                />
+              </div>
 
-                {fieldError && (
-                  <p className="text-sm text-red-400">{fieldError}</p>
-                )}
-                {status === 'error' && (
-                  <p className="text-sm text-red-400">{errorMsg}</p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className="px-6 py-3 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
-                >
-                  {status === 'loading' ? 'Enviando...' : 'Enviar'}
-                </button>
-              </form>
-            )}
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-6 py-3 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+              >
+                {loading ? 'Enviando...' : 'Enviar'}
+              </button>
+            </form>
           </div>
         </div>
       </div>

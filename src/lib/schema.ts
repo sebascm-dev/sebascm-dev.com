@@ -1,4 +1,4 @@
-import { pgTable, serial, text, varchar, integer, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, varchar, integer, timestamp, boolean, date } from "drizzle-orm/pg-core";
 
 // Perfil personal — un solo registro
 export const profile = pgTable("profile", {
@@ -7,6 +7,7 @@ export const profile = pgTable("profile", {
   firstName: varchar("first_name", { length: 100 }),
   lastName1: varchar("last_name_1", { length: 100 }),
   lastName2: varchar("last_name_2", { length: 100 }),
+  birthDate: date("birth_date"),
   dni: varchar("dni", { length: 20 }),
   email: varchar("email", { length: 100 }),
   phone: varchar("phone", { length: 30 }),

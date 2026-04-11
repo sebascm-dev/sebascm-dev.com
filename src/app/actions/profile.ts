@@ -59,6 +59,7 @@ export async function updateProfile(_prevState: ProfileActionResult, formData: F
       firstName: (formData.get('firstName') as string) || null,
       lastName1: (formData.get('lastName1') as string) || null,
       lastName2: (formData.get('lastName2') as string) || null,
+      birthDate: (formData.get('birthDate') as string) || null,
       dni: (formData.get('dni') as string) || null,
       email: (formData.get('email') as string) || null,
       phone: (formData.get('phone') as string) || null,

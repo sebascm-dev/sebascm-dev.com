@@ -1,11 +1,12 @@
 'use client'
 
-import { useActionState, useRef, useState } from 'react'
+import { useActionState, useEffect, useRef, useState } from 'react'
+import { toast } from '@/lib/toast'
 import Image from 'next/image'
 import {
   IconUser, IconId, IconPhone, IconMail,
   IconMapPin, IconMap2, IconMailbox, IconWorld,
-  IconBriefcase, IconSchool, IconClock, IconAlignLeft,
+  IconBriefcase, IconSchool, IconClock, IconAlignLeft, IconCalendar,
   IconBrandGithub, IconBrandLinkedin, IconBrandX,
   IconBrandInstagram, IconBrandYoutube, IconLink,
 } from '@tabler/icons-react'
@@ -29,6 +30,7 @@ function Field({
   placeholder,
   className,
   icon: Icon,
+  inputProps,
 }: {
   label: string
   name: string
@@ -37,6 +39,7 @@ function Field({
   placeholder?: string
   className?: string
   icon?: React.ComponentType<{ size?: number; className?: string }>
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>
 }) {
   return (
     <div className={`flex flex-col gap-1 min-w-0 ${className ?? ''}`}>
@@ -51,7 +54,55 @@ function Field({
           defaultValue={defaultValue ?? ''}
           placeholder={placeholder}
           className={`bg-[#111] border border-[#1a1a1a] rounded-lg py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#22d3ee] transition-colors w-full ${Icon ? 'pl-8 pr-3' : 'px-3'}`}
+          {...inputProps}
         />
+      </div>
+    </div>
+  )
+}
+
+// Convierte YYYY-MM-DD → dd/mm/yyyy para mostrar
+function isoToDisplay(iso: string | null | undefined): string {
+  if (!iso) return ''
+  const [y, m, d] = iso.split('-')
+  if (!y || !m || !d) return ''
+  return `${d}/${m}/${y}`
+}
+
+// Convierte dd/mm/yyyy → YYYY-MM-DD para la DB
+function displayToIso(display: string): string {
+  const [d, m, y] = display.split('/')
+  if (!d || !m || !y) return display
+  return `${y}-${m}-${d}`
+}
+
+function BirthDateField({ defaultValue }: { defaultValue: string | null | undefined }) {
+  const [display, setDisplay] = useState(isoToDisplay(defaultValue))
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    let val = e.target.value.replace(/[^\d]/g, '')
+    if (val.length > 2) val = val.slice(0, 2) + '/' + val.slice(2)
+    if (val.length > 5) val = val.slice(0, 5) + '/' + val.slice(5)
+    if (val.length > 10) val = val.slice(0, 10)
+    setDisplay(val)
+  }
+
+  const isoValue = display.length === 10 ? displayToIso(display) : ''
+
+  return (
+    <div className="flex flex-col gap-1 min-w-0">
+      <label className="text-xs text-gray-500 font-[var(--font-fira-code)]">Fecha de nacimiento</label>
+      <div className="relative">
+        <IconCalendar size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+        <input
+          type="text"
+          value={display}
+          onChange={handleChange}
+          placeholder="dd/mm/yyyy"
+          maxLength={10}
+          className="bg-[#111] border border-[#1a1a1a] rounded-lg py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#22d3ee] transition-colors w-full pl-8 pr-3"
+        />
+        <input type="hidden" name="birthDate" value={isoValue} />
       </div>
     </div>
   )
@@ -61,6 +112,11 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
   const [state, formAction] = useActionState(updateProfile, initialState)
   const [avatarPreview, setAvatarPreview] = useState<string | null>(initialData?.avatarUrl ?? null)
   const avatarRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (state.success) toast.success('Perfil guardado correctamente.')
+    else if (state.error) toast.error(state.error)
+  }, [state])
 
   return (
     <form id="profile-form" action={formAction} className="space-y-6">
@@ -108,20 +164,27 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
               <Field label="Segundo apellido" name="lastName2" defaultValue={initialData?.lastName2} placeholder="Marín" icon={IconUser} />
             </div>
             <Field label="Email" name="email" type="email" defaultValue={initialData?.email} placeholder="correo@ejemplo.com" icon={IconMail} />
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-3 gap-3">
               <Field label="DNI" name="dni" defaultValue={initialData?.dni} placeholder="12345678A" icon={IconId} />
               <Field label="Teléfono" name="phone" defaultValue={initialData?.phone} placeholder="+34 600 000 000" icon={IconPhone} />
+              <BirthDateField defaultValue={initialData?.birthDate} />
             </div>
           </div>
         </div>
 
         {/* Dirección */}
-        <div className="grid grid-cols-2 gap-3">
-          <Field label="Localidad" name="location" defaultValue={initialData?.location} placeholder="Rociana del Condado" icon={IconMapPin} />
-          <Field label="Provincia" name="province" defaultValue={initialData?.province} placeholder="Huelva" icon={IconMap2} />
-          <Field label="Código postal" name="zip" defaultValue={initialData?.zip} placeholder="21730" icon={IconMailbox} />
-          <Field label="Comunidad autónoma" name="community" defaultValue={initialData?.community} placeholder="Andalucía" icon={IconMap2} />
-          <Field label="País" name="country" defaultValue={initialData?.country} placeholder="España" icon={IconWorld} />
+        <div className="space-y-3">
+          <div className="grid grid-cols-3 gap-3">
+            <Field label="Provincia" name="province" defaultValue={initialData?.province} placeholder="Huelva" icon={IconMap2} />
+            <Field label="Comunidad autónoma" name="community" defaultValue={initialData?.community} placeholder="Andalucía" icon={IconMap2} />
+            <Field label="País" name="country" defaultValue={initialData?.country} placeholder="España" icon={IconWorld} />
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            <div className="col-span-2">
+              <Field label="Localidad" name="location" defaultValue={initialData?.location} placeholder="Rociana del Condado" icon={IconMapPin} />
+            </div>
+            <Field label="Código postal" name="zip" defaultValue={initialData?.zip} placeholder="21730" icon={IconMailbox} />
+          </div>
         </div>
       </section>
 
@@ -149,7 +212,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
           </div>
           <Field label="Puesto de trabajo" name="jobTitle" defaultValue={initialData?.jobTitle} placeholder="Frontend Developer" icon={IconBriefcase} className="flex-1 min-w-0" />
           <Field label="Título / Grado" name="degree" defaultValue={initialData?.degree} placeholder="Ingeniería Informática" icon={IconSchool} className="flex-1 min-w-0" />
-          <Field label="Años de experiencia" name="experience" type="number" defaultValue={initialData?.experience} placeholder="2" icon={IconClock} className="flex-1 min-w-0" />
+          <Field label="Experiencia" name="experience" type="number" defaultValue={initialData?.experience} placeholder="2" icon={IconClock} className="w-20 shrink-0" />
         </div>
         <div className="flex flex-col gap-1">
           <label className="text-xs text-gray-500 font-[var(--font-fira-code)]">
@@ -182,10 +245,6 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
           <Field label="Website" name="website" defaultValue={initialData?.website} placeholder="https://tusitio.com" icon={IconLink} />
         </div>
       </section>
-
-      {/* Feedback */}
-      {state.error && <p className="text-sm text-red-400">{state.error}</p>}
-      {state.success && <p className="text-sm text-emerald-400">Perfil guardado correctamente.</p>}
 
     </form>
   )

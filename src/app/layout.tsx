@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { ViewTransition } from 'react'
+import { Toaster } from 'sonner'
 import './globals.css'
 import { about } from '@/data/about'
 import ScrollToTop from '@/components/ui/ScrollToTop'
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
         <ViewTransition>{children}</ViewTransition>
         <ScrollToTop />
+        <Toaster position="top-right" richColors closeButton />
       </body>
     </html>
   )
