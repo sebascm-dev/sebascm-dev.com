@@ -4,6 +4,14 @@ import { motion, Variants } from 'framer-motion'
 import { about } from '@/data/about'
 import ActivityGraph from '@/components/ui/ActivityGraph'
 import { IconArrowDown, IconMapPin } from '@tabler/icons-react'
+import type { profile as profileTable } from '@/lib/schema'
+import type { InferSelectModel } from 'drizzle-orm'
+
+type Profile = InferSelectModel<typeof profileTable>
+
+interface HeroProps {
+  profile?: Profile | null
+}
 
 const container: Variants = {
   hidden: { opacity: 0 },
@@ -18,7 +26,24 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0, 0, 0.58, 1] } },
 }
 
-export default function Hero() {
+export default function Hero({ profile }: HeroProps) {
+  // Nombre: del perfil si está completo, fallback a about
+  const firstName = profile?.firstName ?? about.name.split(' ')[0]
+  const lastName = [profile?.lastName1, profile?.lastName2].filter(Boolean).join(' ') || about.name.split(' ').slice(1).join(' ')
+
+  // Rol y bio/tagline
+  const role = profile?.degree ?? profile?.jobTitle ?? about.role
+  const tagline = profile?.bio ?? about.tagline
+
+  // Localización: localidad + provincia si están disponibles, fallback estático
+  const location = (profile?.location && profile?.province)
+    ? `${profile.location}, ${profile.province}`
+    : profile?.location
+    ?? profile?.province
+    ?? 'Huelva, España'
+
+  // Disponibilidad
+  const available = profile?.available ?? true
   return (
     <section
       id="hero"
@@ -35,12 +60,26 @@ export default function Hero() {
         <div className="w-full max-w-5xl mx-auto px-6 py-16 pointer-events-auto relative z-10">
           <motion.div variants={container} initial="hidden" animate="show">
 
-            {/* Badge disponible */}
-            <motion.div variants={item} className="mb-8">
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[11px] font-medium tracking-wide">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Disponible para trabajar
-              </span>
+            {/* Badge estado laboral */}
+            <motion.div variants={item} className="mb-8 flex items-center gap-4">
+              {available ? (
+                <>
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[11px] font-medium tracking-wide">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Disponible para trabajar
+                  </span>
+                  {profile?.jobTitle && (
+                    <span className="text-[11px] text-[var(--foreground)]/35 font-medium tracking-wide">
+                      {profile.jobTitle}
+                    </span>
+                  )}
+                </>
+              ) : (
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded border border-sky-500/20 bg-sky-500/5 text-sky-400 text-[11px] font-medium tracking-wide">
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+                  {profile?.jobTitle ? `Trabajando en ${profile.jobTitle}` : 'No disponible'}
+                </span>
+              )}
             </motion.div>
 
             {/* Nombre */}
@@ -55,16 +94,16 @@ export default function Hero() {
               variants={item}
               className="text-6xl sm:text-8xl font-bold tracking-tight leading-[0.9] mb-5"
             >
-              {about.name.split(' ')[0]}
+              {firstName}
               <br />
-              <span className="text-[var(--foreground)]/25">{about.name.split(' ').slice(1).join(' ')}</span>
+              <span className="text-[var(--foreground)]/25">{lastName}</span>
             </motion.h1>
 
             {/* Rol con línea decorativa */}
             <motion.div variants={item} className="flex items-center gap-3 mb-5">
               <div className="h-[1px] w-8 bg-[var(--accent)]/40" />
               <p className="text-lg sm:text-xl text-[var(--accent)] font-medium">
-                {about.role}
+                {role}
               </p>
             </motion.div>
 
@@ -72,7 +111,7 @@ export default function Hero() {
               variants={item}
               className="text-sm sm:text-base text-[var(--foreground)]/50 max-w-md leading-relaxed mb-10"
             >
-              {about.tagline}
+              {tagline}
             </motion.p>
 
             {/* CTAs + localización */}
@@ -91,7 +130,7 @@ export default function Hero() {
               </a>
               <span className="hidden sm:flex items-center gap-1.5 text-[var(--foreground)]/30 text-xs ml-2">
                 <IconMapPin size={12} />
-                Huelva, España
+                {location}
               </span>
             </motion.div>
 
