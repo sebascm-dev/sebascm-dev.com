@@ -2,12 +2,11 @@
 
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { IconLayoutDashboard, IconBrandGithub, IconUser } from '@tabler/icons-react'
+import { IconLayoutDashboard, IconBrandGithub } from '@tabler/icons-react'
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: IconLayoutDashboard },
   { href: '/admin/github', label: 'GitHub', icon: IconBrandGithub },
-  { href: '/admin/profile', label: 'Perfil', icon: IconUser },
 ]
 
 export function AdminNav() {
@@ -18,15 +17,11 @@ export function AdminNav() {
 
   return (
     <nav className="flex-1 px-3 py-4 space-y-1">
-      {navItems.map((item, index) => {
+      {navItems.map((item) => {
         const active = isActive(item.href)
         const Icon = item.icon
-        const showSeparator = index > 0 && index < navItems.length && navItems.length > 2
         return (
           <div key={item.href}>
-            {showSeparator && index === navItems.length - 1 && (
-              <div className="border-b border-[#1a1a1a] mb-2 mt-1" />
-            )}
             <Link
               href={item.href}
               className={

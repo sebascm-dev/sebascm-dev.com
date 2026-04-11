@@ -1,5 +1,6 @@
 // Admin shell layout — Server Component with defense-in-depth auth check
 import Image from 'next/image'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { auth, signOut } from '@/lib/auth'
 import { about } from '@/data/about'
@@ -35,8 +36,11 @@ export default async function AdminLayout({
       {/* Sidebar */}
       <aside className="w-56 shrink-0 flex flex-col border-r border-[#1a1a1a] bg-[#0d0d0d] sticky top-0 h-screen">
 
-        {/* User profile */}
-        <div className="px-4 py-4 border-b border-[#1a1a1a] flex items-center gap-3">
+        {/* User profile — click to go to profile settings */}
+        <Link
+          href="/admin/profile"
+          className="px-4 py-4 border-b border-[#1a1a1a] flex items-center gap-3 hover:bg-[#1a1a1a] transition-colors"
+        >
           <Image
             src={about.photo}
             alt={about.name}
@@ -48,7 +52,7 @@ export default async function AdminLayout({
             <p className="text-sm font-medium text-white truncate">Sebastián</p>
             <p className="text-xs text-gray-500 truncate">{about.email}</p>
           </div>
-        </div>
+        </Link>
 
         <AdminNav />
 
