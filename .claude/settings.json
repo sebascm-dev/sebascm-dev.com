@@ -51,7 +51,8 @@
       "Bash(py \"C:/Users/spano/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"donut pie chart legend data visualization\" --domain chart -n 5)",
       "Bash(npx tsc:*)",
       "Bash(python3 \"C:/Users/spano/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"admin dashboard profile form dark oled\" --design-system -p \"sebascm-dev admin\" -f markdown)",
-      "Bash(py \"C:/Users/spano/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"admin dashboard profile form dark oled\" --design-system -p \"sebascm-dev admin\" -f markdown)"
+      "Bash(py \"C:/Users/spano/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"admin dashboard profile form dark oled\" --design-system -p \"sebascm-dev admin\" -f markdown)",
+      "Bash(npm ls:*)"
     ],
     "additionalDirectories": [
       "C:\\Users\\spano\\Documents\\Dev\\sebascm-dev.com",
