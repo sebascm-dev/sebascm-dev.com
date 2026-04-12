@@ -3,7 +3,7 @@
 import { motion, Variants } from 'framer-motion'
 import { about } from '@/data/about'
 import ActivityGraph from '@/components/ui/ActivityGraph'
-import { IconArrowDown, IconMapPin } from '@tabler/icons-react'
+import { IconArrowDown, IconMapPin, IconDownload, IconMail } from '@tabler/icons-react'
 import type { profile as profileTable } from '@/lib/schema'
 import type { InferSelectModel } from 'drizzle-orm'
 
@@ -117,15 +117,18 @@ export default function Hero({ profile }: HeroProps) {
             {/* CTAs + localización */}
             <motion.div variants={item} className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <a
-                href="#proyectos"
-                className="inline-flex items-center justify-center px-6 py-2.5 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm rounded-lg hover:opacity-90 transition-opacity"
+                href="/cv.pdf"
+                download="Currículum - Sebastián Contreras Marín.pdf"
+                className="inline-flex items-center gap-2 justify-center px-6 py-2.5 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm rounded-lg hover:opacity-90 transition-opacity"
               >
-                Ver proyectos
+                <IconDownload size={16} />
+                Descargar CV
               </a>
               <a
                 href="#contacto"
-                className="inline-flex items-center justify-center px-6 py-2.5 border border-[var(--border)] text-[var(--foreground)]/60 font-semibold text-sm rounded-lg hover:border-[var(--accent)]/50 hover:text-[var(--accent)] transition-colors"
+                className="inline-flex items-center gap-2 justify-center px-6 py-2.5 border border-[var(--border)] text-[var(--foreground)]/60 font-semibold text-sm rounded-lg hover:border-[var(--accent)]/50 hover:text-[var(--accent)] transition-colors"
               >
+                <IconMail size={16} />
                 Contactar
               </a>
               <span className="hidden sm:flex items-center gap-1.5 text-[var(--foreground)]/30 text-xs ml-2">
