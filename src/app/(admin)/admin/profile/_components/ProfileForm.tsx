@@ -136,7 +136,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
             onClick={() => avatarRef.current?.click()}
           >
             {avatarPreview ? (
-              <Image src={avatarPreview} alt="Avatar" fill sizes="120px" loading="eager" className="object-cover" />
+              <Image src={avatarPreview} alt="Avatar" fill sizes="200px" loading="eager" className="object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-gray-600 text-3xl">?</div>
             )}
