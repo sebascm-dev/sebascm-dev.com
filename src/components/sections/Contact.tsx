@@ -83,8 +83,7 @@ export default function Contact() {
                 <FaLinkedin size={18} /> LinkedIn
               </a>
               <a
-                href="/cv.pdf"
-                download
+                href="/api/cv"
                 className="inline-flex items-center gap-3 text-sm text-[var(--accent)] hover:opacity-80 transition-opacity"
               >
                 <HiDocumentArrowDown size={18} /> Descargar CV

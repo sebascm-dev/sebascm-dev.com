@@ -116,14 +116,15 @@ export default function Hero({ profile }: HeroProps) {
 
             {/* CTAs + localización */}
             <motion.div variants={item} className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <a
-                href="/cv.pdf"
-                download="Currículum - Sebastián Contreras Marín.pdf"
-                className="inline-flex items-center gap-2 justify-center px-6 py-2.5 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm rounded-lg hover:opacity-90 transition-opacity"
-              >
-                <IconDownload size={16} />
-                Descargar CV
-              </a>
+              {profile?.cvUrl && (
+                <a
+                  href="/api/cv"
+                  className="inline-flex items-center gap-2 justify-center px-6 py-2.5 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm rounded-lg hover:opacity-90 transition-opacity"
+                >
+                  <IconDownload size={16} />
+                  Descargar CV
+                </a>
+              )}
               <a
                 href="#contacto"
                 className="inline-flex items-center gap-2 justify-center px-6 py-2.5 border border-[var(--border)] text-[var(--foreground)]/60 font-semibold text-sm rounded-lg hover:border-[var(--accent)]/50 hover:text-[var(--accent)] transition-colors"
