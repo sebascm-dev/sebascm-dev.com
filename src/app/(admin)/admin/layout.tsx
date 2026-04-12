@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { auth, signOut } from '@/lib/auth'
 import { about } from '@/data/about'
+import { getProfile } from '@/app/actions/profile'
 import { IconLogout } from '@tabler/icons-react'
 import { AdminNav } from '@/components/admin/AdminNav'
 import { Breadcrumb } from '@/components/admin/Breadcrumb'
@@ -30,6 +31,9 @@ export default async function AdminLayout({
   const session = await auth()
   if (!session) redirect('/login')
 
+  const profileData = await getProfile()
+  const avatarSrc = profileData?.avatarUrl ?? about.photo
+
   return (
     <div className={`min-h-screen bg-[#0a0a0a] text-white flex ${firaCode.variable} ${firaSans.variable} font-[var(--font-fira-sans)]`}>
 
@@ -42,7 +46,7 @@ export default async function AdminLayout({
           className="px-4 py-4 border-b border-[#1a1a1a] flex items-center gap-3 hover:bg-[#1a1a1a] transition-colors"
         >
           <Image
-            src={about.photo}
+            src={avatarSrc}
             alt={about.name}
             width={36}
             height={36}
